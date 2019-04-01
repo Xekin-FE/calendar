@@ -1,0 +1,44 @@
+<!--components/calendar/index.wxml-->
+<view class="calendar">
+  <view class="table_title">
+    <view class="title" catchtap="switchTable">{{title}}</view>
+    <view class="icons">
+      <view class="icon" bindtap="prev">
+        <image class="icon_up" src="./icon/up.svg" mode="aspectFill"></image>
+      </view>
+      <view class="icon" bindtap="next">
+        <image class="icon_down" src="./icon/down.svg" mode="aspectFill"></image>
+      </view>
+    </view>
+  </view>
+  <view class="main_table">
+    <swiper class="swiper" vertical current="{{swiperCurrent}}" duration="500">
+      <block wx:for="{{swiperDatas}}" wx:for-item="swiper" wx:for-index="index" wx:key="index">
+        <swiper-item catchtouchmove="preventEvent">
+          <view class="year_table {{table === 'year'?'open':'close'}}">
+            <block wx:for="{{swiper}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+              <view catchtap="selectYear" data-year="{{item}}" class="item {{item.current?'nowYear':'dark'}}">{{item.year}}</view>
+            </block>
+            
+          </view>
+
+          <view class="month_table {{table === 'month'?'open':'close'}}">
+            <block wx:for="{{swiper}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+              <view catchtap="selectMonth" data-month="{{index}}" class="item {{item.current?'nowMonth':'dark'}}">{{item.month}}月</view>
+            </block>
+
+          </view>
+
+          <view class="date_table {{table === 'date'?'open':'close'}}">
+            <block wx:for="{{weekday_cn}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+              <view class="item">{{item}}</view>
+            </block>
+            <block wx:for="{{swiper}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+              <view catchtap="selectDate" data-index="{{index}}" data-item="{{item}}" class="item {{item.current?'dark':'light'}} {{item.isToday?'today':''}}">{{item.date}}</view>
+            </block>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</view>
